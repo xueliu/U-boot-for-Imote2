@@ -1,7 +1,7 @@
 /*
- * Aeronix Zipit Z2 configuration file
+ * Intel imote2 configuration file
  *
- * Copyright (C) 2009-2010 Marek Vasut <marek.vasut@gmail.com>
+ * Copyright (C) 2010 liu xue <liuxuenetmail@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -26,7 +26,7 @@
  * High Level Board Configuration Options
  */
 #define	CONFIG_PXA27X		1	/* Marvell PXA270 CPU */
-#define	CONFIG_ZIPITZ2		1	/* Zipit Z2 board */
+#define	CONFIG_IMOTE2		1	/* Intel Imote2 board */
 #define	CONFIG_SYS_TEXT_BASE	0x0
 
 #undef	BOARD_LATE_INIT
@@ -57,15 +57,15 @@
 #define	CONFIG_CMDLINE_TAG
 #define	CONFIG_SETUP_MEMORY_TAGS
 #define	CONFIG_SYS_TEXT_BASE		0x0
-#define	CONFIG_LZMA			/* LZMA compression support */
+//#define	CONFIG_LZMA			/* LZMA compression support */
 
 /*
  * Serial Console Configuration
- * STUART - the lower serial port on Colibri board
+ * FFUART - the lower serial port on imote2 board
  */
 #define	CONFIG_PXA_SERIAL
-#define	CONFIG_STUART			1
-#define	CONFIG_BAUDRATE			115200
+#define	CONFIG_FFUART			    1
+#define	CONFIG_BAUDRATE			    115200
 #define	CONFIG_SYS_BAUDRATE_TABLE	{ 9600, 19200, 38400, 57600, 115200 }
 
 /*
@@ -77,8 +77,9 @@
 #undef	CONFIG_CMD_NFS
 #define	CONFIG_CMD_ENV
 #undef	CONFIG_CMD_IMLS
-#define	CONFIG_CMD_MMC
-#define	CONFIG_CMD_SPI
+//#define	CONFIG_CMD_MMC
+//#define	CONFIG_CMD_SPI
+#define CONFIG_CMD_USB
 
 /*
  * MMC Card Configuration
@@ -92,31 +93,33 @@
 #define	CONFIG_DOS_PARTITION
 #endif
 
+#if 0
 /*
  * SPI and LCD
  */
-#ifdef	CONFIG_CMD_SPI
-#define	CONFIG_SOFT_SPI
-#define	CONFIG_LCD
-#define	CONFIG_LMS283GF05
-#define	CONFIG_VIDEO_LOGO
-#define	CONFIG_CMD_BMP
-#define	CONFIG_SPLASH_SCREEN
-#define	CONFIG_SPLASH_SCREEN_ALIGN
-#define	CONFIG_VIDEO_BMP_GZIP
-#define	CONFIG_VIDEO_BMP_RLE8
-#define	CONFIG_SYS_VIDEO_LOGO_MAX_SIZE	(2 << 20)
-#undef	SPI_INIT
+        #ifdef	CONFIG_CMD_SPI
+            #define	CONFIG_SOFT_SPI
+            #define	CONFIG_LCD
+            #define	CONFIG_LMS283GF05
+            #define	CONFIG_VIDEO_LOGO
+            #define	CONFIG_CMD_BMP
+            #define	CONFIG_SPLASH_SCREEN
+            #define	CONFIG_SPLASH_SCREEN_ALIGN
+            #define	CONFIG_VIDEO_BMP_GZIP
+            #define	CONFIG_VIDEO_BMP_RLE8
+            #define	CONFIG_SYS_VIDEO_LOGO_MAX_SIZE	(2 << 20)
+            #undef	SPI_INIT
 
-#define	SPI_DELAY	udelay(10)
-#define	SPI_SDA(val)	zipitz2_spi_sda(val)
-#define	SPI_SCL(val)	zipitz2_spi_scl(val)
-#define	SPI_READ	zipitz2_spi_read()
-#ifndef	__ASSEMBLY__
+            #define	SPI_DELAY	udelay(10)
+            #define	SPI_SDA(val)	zipitz2_spi_sda(val)
+            #define	SPI_SCL(val)	zipitz2_spi_scl(val)
+            #define	SPI_READ	zipitz2_spi_read()
+            #ifndef	__ASSEMBLY__
 void zipitz2_spi_sda(int);
 void zipitz2_spi_scl(int);
 unsigned char zipitz2_spi_read(void);
-#endif
+            #endif
+        #endif
 #endif
 
 /*
@@ -155,7 +158,7 @@ unsigned char zipitz2_spi_read(void);
 /*
  * Stack sizes
  */
-#define	CONFIG_STACKSIZE		(128*1024)	/* regular stack */
+#define	CONFIG_STACKSIZE		    (128*1024)	/* regular stack */
 #ifdef	CONFIG_USE_IRQ
 #define	CONFIG_STACKSIZE_IRQ		(4*1024)	/* IRQ stack */
 #define	CONFIG_STACKSIZE_FIQ		(4*1024)	/* FIQ stack */
@@ -164,9 +167,9 @@ unsigned char zipitz2_spi_read(void);
 /*
  * DRAM Map
  */
-#define	CONFIG_NR_DRAM_BANKS		1		/* We have 1 bank of DRAM */
-#define	PHYS_SDRAM_1			0xa0000000	/* SDRAM Bank #1 */
-#define	PHYS_SDRAM_1_SIZE		0x02000000	/* 32 MB */
+#define	CONFIG_NR_DRAM_BANKS		1		    /* We have 1 bank of DRAM */
+#define	PHYS_SDRAM_1			    0xa0000000	/* SDRAM Bank #1 */
+#define	PHYS_SDRAM_1_SIZE		    0x02000000	/* 32 MB */
 
 #define	CONFIG_SYS_DRAM_BASE		0xa0000000	/* CS0 */
 #define	CONFIG_SYS_DRAM_SIZE		0x02000000	/* 32 MB DRAM */
@@ -182,14 +185,14 @@ unsigned char zipitz2_spi_read(void);
 /*
  * NOR FLASH
  */
-#define PHYS_FLASH_1			0x00000000	/* Flash Bank #1 */
-#define PHYS_FLASH_SIZE			0x00800000	/* 8 MB */
+#define PHYS_FLASH_1			    0x00000000	/* Flash Bank #1 */
+#define PHYS_FLASH_SIZE			    0x02000000	/* 32 MB */
 #define PHYS_FLASH_SECT_SIZE		0x00010000	/* 64 KB sectors */
 #define CONFIG_SYS_FLASH_BASE		PHYS_FLASH_1
 
 #define CONFIG_SYS_FLASH_CFI
 #define CONFIG_FLASH_CFI_DRIVER		1
-#define CONFIG_SYS_FLASH_CFI_WIDTH      FLASH_CFI_16BIT
+#define CONFIG_SYS_FLASH_CFI_WIDTH  FLASH_CFI_16BIT
 
 #define CONFIG_SYS_MONITOR_BASE		PHYS_FLASH_1
 #define CONFIG_SYS_MONITOR_LEN		PHYS_FLASH_SECT_SIZE
@@ -208,28 +211,31 @@ unsigned char zipitz2_spi_read(void);
 /*
  * GPIO settings
  */
-#define CONFIG_SYS_GAFR0_L_VAL	0x02000140
-#define CONFIG_SYS_GAFR0_U_VAL	0x59188000
-#define CONFIG_SYS_GAFR1_L_VAL	0x63900002
-#define CONFIG_SYS_GAFR1_U_VAL	0xaaa03950
-#define CONFIG_SYS_GAFR2_L_VAL	0x0aaaaaaa
-#define CONFIG_SYS_GAFR2_U_VAL	0x29000308
-#define CONFIG_SYS_GAFR3_L_VAL	0x54000000
-#define CONFIG_SYS_GAFR3_U_VAL	0x000000d5
-#define CONFIG_SYS_GPCR0_VAL	0x00000000
-#define CONFIG_SYS_GPCR1_VAL	0x00000020
+#define CONFIG_SYS_GAFR0_L_VAL  0x94F00000
+#define CONFIG_SYS_GAFR0_U_VAL  0x015A859A
+#define CONFIG_SYS_GAFR1_L_VAL  0x999A150A
+#define CONFIG_SYS_GAFR1_U_VAL  0x0005A0AA
+#define CONFIG_SYS_GAFR2_L_VAL  0x6AA00000
+#define CONFIG_SYS_GAFR2_U_VAL  0x55A8001A
+#define CONFIG_SYS_GAFR3_L_VAL  0x56AA87FB
+#define CONFIG_SYS_GAFR3_U_VAL  0x00000001
+
+#define CONFIG_SYS_GPCR0_VAL	0x00001000
+#define CONFIG_SYS_GPCR1_VAL	0x00000000
 #define CONFIG_SYS_GPCR2_VAL	0x00000000
 #define CONFIG_SYS_GPCR3_VAL	0x00000000
-#define CONFIG_SYS_GPDR0_VAL	0xdafcee00
-#define CONFIG_SYS_GPDR1_VAL	0xffa3aaab
-#define CONFIG_SYS_GPDR2_VAL	0x8fe9ffff
-#define CONFIG_SYS_GPDR3_VAL	0x001b1f8a
-#define CONFIG_SYS_GPSR0_VAL	0x06080400
-#define CONFIG_SYS_GPSR1_VAL	0x007f0000
-#define CONFIG_SYS_GPSR2_VAL	0x032a0000
-#define CONFIG_SYS_GPSR3_VAL	0x00000180
 
-#define CONFIG_SYS_PSSR_VAL	0x30
+#define CONFIG_SYS_GPDR0_VAL	0xC27B9C04
+#define CONFIG_SYS_GPDR1_VAL	0x00EFAA83
+#define CONFIG_SYS_GPDR2_VAL	0x0E23FC00
+#define CONFIG_SYS_GPDR3_VAL	0x001E1F81
+
+#define CONFIG_SYS_GPSR0_VAL	0x00708800
+#define CONFIG_SYS_GPSR1_VAL	0x03cf0002
+#define CONFIG_SYS_GPSR2_VAL	0x0021FC00
+#define CONFIG_SYS_GPSR3_VAL	0x00000000
+
+#define CONFIG_SYS_PSSR_VAL	    0x30
 
 /*
  * Clock settings
@@ -240,24 +246,42 @@ unsigned char zipitz2_spi_read(void);
 /*
  * Memory settings
  */
-#define CONFIG_SYS_MSC0_VAL	0x2ffc38f8
-#define CONFIG_SYS_MSC1_VAL	0x0000ccd1
-#define CONFIG_SYS_MSC2_VAL	0x0000b884
-#define CONFIG_SYS_MDCNFG_VAL	0x08000ba9
-#define CONFIG_SYS_MDREFR_VAL	0x2011a01e
+#define CONFIG_SYS_MSC0_VAL     0x39F2A7A3
+#define CONFIG_SYS_MSC1_VAL	    0x0000A691
+#define CONFIG_SYS_MSC2_VAL	    0x0000B884
+#define CONFIG_SYS_MDCNFG_VAL	0x00000AC9
+#define CONFIG_SYS_MDREFR_VAL	0x00000018
 #define CONFIG_SYS_MDMRS_VAL	0x00000000
+
+/* not chang yet */
 #define CONFIG_SYS_FLYCNFG_VAL	0x00010001
 #define CONFIG_SYS_SXCNFG_VAL	0x40044004
 
 /*
  * PCMCIA and CF Interfaces
  */
-#define CONFIG_SYS_MECR_VAL	0x00000001
-#define CONFIG_SYS_MCMEM0_VAL	0x00014307
-#define CONFIG_SYS_MCMEM1_VAL	0x00014307
-#define CONFIG_SYS_MCATT0_VAL	0x0001c787
-#define CONFIG_SYS_MCATT1_VAL	0x0001c787
-#define CONFIG_SYS_MCIO0_VAL	0x0001430f
-#define CONFIG_SYS_MCIO1_VAL	0x0001430f
+    #define CONFIG_SYS_MECR_VAL	0x00000001
+    #define CONFIG_SYS_MCMEM0_VAL	0x00014307
+    #define CONFIG_SYS_MCMEM1_VAL	0x00014307
+    #define CONFIG_SYS_MCATT0_VAL	0x0001c787
+    #define CONFIG_SYS_MCATT1_VAL	0x0001c787
+    #define CONFIG_SYS_MCIO0_VAL	0x0001430f
+    #define CONFIG_SYS_MCIO1_VAL	0x0001430f
+
+/*
+ * USB
+ */
+#ifdef CONFIG_CMD_USB
+#define	CONFIG_USB_OHCI_NEW
+#define	CONFIG_SYS_USB_OHCI_CPU_INIT
+#define	CONFIG_SYS_USB_OHCI_BOARD_INIT
+#define	CONFIG_SYS_USB_OHCI_MAX_ROOT_PORTS	2
+#define	CONFIG_SYS_USB_OHCI_REGS_BASE	0x4C000000
+#define	CONFIG_SYS_USB_OHCI_SLOT_NAME	"imote2"
+#define	CONFIG_USB_STORAGE
+#define	CONFIG_DOS_PARTITION
+#define	CONFIG_CMD_FAT
+#define	CONFIG_CMD_EXT2
+#endif
 
 #endif	/* __CONFIG_H */
